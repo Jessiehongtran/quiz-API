@@ -36,8 +36,22 @@ const addResponse = (response) => {
             .then(ids => ({id: ids[0]}))
 }
 
+const getResponsesByUser = (userId) => {
+    return db('responses as r')
+            .where('r.userID', userId)
+            .join('questions as q', 'q.id', 'r.questionID')
+            .join('answers as a', 'a.id', 'r.answerID')
+            .join('users as u', 'u.id', 'r.userID')
+            .select(
+                'q.question_text',
+                'a.answer_text',
+                'a.isAnswer',
+            )
+}
+
 module.exports = {
     getResponses,
     addResponse,
-    getResponsesByQuestion
+    getResponsesByQuestion,
+    getResponsesByUser
 }

@@ -23,7 +23,7 @@ route.post('/', async (req,res) => {
 })
 
 //GET responses by question
-route.get('/:questionID', async (req,res) => {
+route.get('/question/:questionID', async (req,res) => {
     const questionID = req.params.questionID
     try {
         const responses = await responseModel.getResponsesByQuestion(questionID)
@@ -32,5 +32,20 @@ route.get('/:questionID', async (req,res) => {
         res.status(500).json(err.message)
     }
 })
+
+//GET responses by user
+route.get('/user/:userId', async (req,res) => {
+    const userId = req.params.userId
+    try {
+        const responses = await responseModel.getResponsesByUser(userId)
+        res.status(200).json(responses)
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
+//FIND a response
+
+//UPDATE a response
 
 module.exports = route;

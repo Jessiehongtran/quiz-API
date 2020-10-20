@@ -10,18 +10,28 @@ const getAnswersInQuestion = (qna) => {
         let curQuesID = qna[i].questionID
         if (curQuesID === preQuesID){
             question_text = qna[i].question_text
-            answersForQues.push(qna[i].answer_text)
+            answersForQues.push({
+                answerID: qna[i].answerID,
+                answer: qna[i].answer_text,
+                isAnswer: qna[i].isAnswer
+                })
         } else {
             questions.push({
+                questionID: preQuesID,
                 question: question_text,
                 answers: answersForQues
             })
             answersForQues = []
-            answersForQues.push(qna[i].answer_text)
+            answersForQues.push({
+                answerID: qna[i].answerID,
+                answer: qna[i].answer_text,
+                isAnswer: qna[i].isAnswer
+            })
         }
 
         if (i === qna.length -1){
             questions.push({
+                questionID: preQuesID,
                 question: question_text,
                 answers: answersForQues
             })
