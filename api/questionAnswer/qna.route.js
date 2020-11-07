@@ -63,6 +63,34 @@ route.post('/', async (req,res) => {
     }
 })
 
+//FIND question by id
+route.get('/:questionID', async (req,res) => {
+    const questionID = req.params.questionID
+    try {
+        const response = await qaModel.findQuesById(questionID)
+        if (response.length > 0){
+            res.status(200).json(response[0])
+        }
+        else {
+            res.status(401).json({error: 'not found'})
+        }
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
+//UPDATE question
+route.patch('/:questionID', async (req, res) => {
+    const questionID = req.params.questionID
+    const change = req.body
+    try {
+        const count = await qaModel.updateQues(change, questionID)
+        res.status(200).json({message: `Update ${count} question`})
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
 //POST answer
 route.post('/:questionId/answers', async (req,res) => {
     const questionId = req.params.questionId
@@ -71,6 +99,34 @@ route.post('/:questionId/answers', async (req,res) => {
     try {
         const id = await qaModel.addAns(answer)
         res.status(200).json(id)
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
+//FIND answer by id
+route.get('/:answerID', async (req,res) => {
+    const answerID = req.params.answerID
+    try {
+        const response = await qaModel.findAnsById(answerID)
+        if (response.length > 0){
+            res.status(200).json(response[0])
+        }
+        else {
+            res.status(401).json({error: 'not found'})
+        }
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
+//UPDATE answer
+route.patch('/answers/:answerID', async (req, res) => {
+    const answerID = req.params.answerID
+    const change = req.body
+    try {
+        const count = await qaModel.updateAns(change, answerID)
+        res.status(200).json({message: `Updated ${count} answer`})
     } catch (err){
         res.status(500).json(err.message)
     }

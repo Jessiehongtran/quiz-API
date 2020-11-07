@@ -26,8 +26,34 @@ const addAns = (ans) => {
             .then(ids => ({id: ids[0]}))
 }
 
+const updateQues = (change, questionID) => {
+    return db('questions')
+            .where({id: questionID})
+            .update(change)
+}
+
+const updateAns = (change, answerID) => {
+    return db('answers')
+            .where({id: answerID})
+            .update(change)
+}
+
+const findQuesById = (quesID) => {
+    return db('questions')
+            .where({id: quesID})
+}
+
+const findAnsById = (ansID) => {
+    return db('answers')
+            .where({id: ansID})
+}
+
 module.exports = {
     getQnA,
     addQues,
-    addAns
+    addAns,
+    updateQues,
+    updateAns,
+    findQuesById,
+    findAnsById
 }
